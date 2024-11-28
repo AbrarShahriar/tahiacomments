@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook Post UI</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        height: 100vh;
+      }
+      .upload-container {
+        width: 100%;
+        max-width: 400px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .upload-container input[type="file"] {
+        display: none;
+      }
+      .custom-upload {
+        background: #1877f2;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+      }
+      .post-container {
+        margin-top: 20px;
+        display: none;
+        width: 100%;
+        text-align: left;
+      }
+      .post-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .post-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .post-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 15px 0;
+      }
+      .post-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .like-btn {
+        background: #1877f2;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .comment-section {
+        margin-top: 10px;
+      }
+      .comment {
+        background: #dbe1ea;
+        padding: 10px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="upload-container">
+      <h1 class="text-lg text-center mb-4">
+        Take a picture & let Tahia cook you
+      </h1>
+      <label class="custom-upload" for="imageUpload">Upload Image</label>
+      <input type="file" id="imageUpload" accept="image/*" />
+
+      <div class="post-container" id="postContainer">
+        <div class="post-header">
+          <img id="pp" alt="User Profile" />
+          <span>Your Profile</span>
+        </div>
+        <img id="postImage" class="post-image" src="" alt="Uploaded Image" />
+        <div class="post-actions">
+          <button class="like-btn" id="likeButton">Like</button>
+          <span id="likeCount"> likes</span>
+        </div>
+        <div class="comment-section">
+          <h3 class="text-md mb-4">Comments</h3>
+          <div class="flex flex-row align-center gap-4">
+            <div>
+              <img
+                class="w-12 h-12 rounded-full"
+                src="https://scontent.fdac138-2.fna.fbcdn.net/v/t39.30808-1/466606293_122168780534248032_1171667287011716074_n.jpg?stp=dst-jpg_s200x200&_nc_cat=106&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeFWVGy7gsdm3OVnZ9RiZasWGw_SXpR_1OYbD9JelH_U5r-612b5VWfGqGl4xs-CIpssMVVr9jjtkiK3-EwMGy12&_nc_ohc=cEpNfjM9mNcQ7kNvgEVyDCC&_nc_zt=24&_nc_ht=scontent.fdac138-2.fna&_nc_gid=AGWK03nlNO02hRjsvtUhR2d&oh=00_AYChnCfpCpIywPy-epqEHa-YJfTvYhvdiIf4NYgm_teScA&oe=674E42D8"
+                alt=""
+              />
+            </div>
+            <div class="comment" id="randomComment"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      const comments = [
+        "bomi",
+        "coke",
+        "ew",
+        "Yayyyy",
+        "Sorry bhai",
+        "Dkdjdkdhdu",
+        "Amar matha kaj kortesena",
+        "Djdjdjdj",
+        "Ghum pet matha pith",
+        "Chuttamale chutesare",
+        "Ami interested na",
+        "Pet betha kortese",
+        "tumi ki 1 e poro?",
+        "kotha bujho na?",
+        "tumi red flag bhai",
+        "ekta chor marbo",
+        "ar na",
+        "star star star",
+      ];
+
+      const imageUpload = document.getElementById("imageUpload");
+      const postContainer = document.getElementById("postContainer");
+      const postImage = document.getElementById("postImage");
+      const pp = document.getElementById("pp");
+      const randomComment = document.getElementById("randomComment");
+      const likeButton = document.getElementById("likeButton");
+      const likeCount = document.getElementById("likeCount");
+
+      let likes = 0;
+
+      imageUpload.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            postImage.src = reader.result;
+            pp.src = reader.result;
+            postContainer.style.display = "block";
+            // Display a random comment
+            randomComment.textContent =
+              comments[Math.floor(Math.random() * comments.length)];
+          };
+          reader.readAsDataURL(file);
+          likeCount.textContent = `${likes} like${likes > 1 ? "s" : ""}`;
+        }
+      });
+
+      likeButton.addEventListener("click", () => {
+        likes++;
+        likeCount.textContent = `${likes} like${likes > 1 ? "s" : ""}`;
+      });
+    </script>
+  </body>
+</html>
